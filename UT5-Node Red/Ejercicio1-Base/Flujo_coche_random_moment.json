@@ -1,0 +1,160 @@
+[
+    {
+        "id": "c8152245a40112bf",
+        "type": "tab",
+        "label": "Flujo coche random y moment",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "390bd504b54125f8",
+        "type": "inject",
+        "z": "c8152245a40112bf",
+        "name": "Inject",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "4e064a1fb85d34d6"
+            ]
+        ]
+    },
+    {
+        "id": "8ccdc32579731e31",
+        "type": "debug",
+        "z": "c8152245a40112bf",
+        "name": "Resultado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "dc5a1d04fff318ab",
+        "type": "function",
+        "z": "c8152245a40112bf",
+        "name": "Añadimos la fecha",
+        "func": "msg.payload.moment = Date.now()\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 180,
+        "wires": [
+            [
+                "8ccdc32579731e31"
+            ]
+        ]
+    },
+    {
+        "id": "4e064a1fb85d34d6",
+        "type": "data-generator",
+        "z": "c8152245a40112bf",
+        "name": "Generamos el numero random de coche",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \"car_id\":\"{{int 0 9}}{{int 0 9}}{{int 0 9}}{{int 0 9}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}\"\n}\n\n",
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "dc5a1d04fff318ab"
+            ]
+        ]
+    },
+    {
+        "id": "18324387d03ba544",
+        "type": "inject",
+        "z": "c8152245a40112bf",
+        "name": "Inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 280,
+        "wires": [
+            [
+                "a2d3b15581c10e89"
+            ]
+        ]
+    },
+    {
+        "id": "a2d3b15581c10e89",
+        "type": "data-generator",
+        "z": "c8152245a40112bf",
+        "name": "Generar lista de 10 numeros random",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "text",
+        "template": "[ {{#repeat 10}} \"{{int 0 9}}{{int 0 9}}{{int 0 9}}{{int 0 9}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}\", {{/repeat}} ]",
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "a8a88602b3359454"
+            ]
+        ]
+    },
+    {
+        "id": "a8a88602b3359454",
+        "type": "debug",
+        "z": "c8152245a40112bf",
+        "name": "Resultado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ea5c44877f62a5ad",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-data-generator": "1.0.2"
+        }
+    }
+]

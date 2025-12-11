@@ -1,0 +1,195 @@
+[
+    {
+        "id": "f2d3ab3a5a8d0e62",
+        "type": "tab",
+        "label": "Ejercicio Consulta Temperatura",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1e9d0a8463614d56",
+        "type": "http request",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "query",
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude={{{latitude}}}&longitude={{{longitude}}}&start_date={{{start_date}}}&end_date={{{end_date}}}&hourly=temperature_2m&timezone=auto",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "6128fc586a197c5c"
+            ]
+        ]
+    },
+    {
+        "id": "3c40cdf7ea389899",
+        "type": "inject",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "",
+        "props": [
+            {
+                "p": "latitude",
+                "v": "39.47276",
+                "vt": "num"
+            },
+            {
+                "p": "longitude",
+                "v": "-0.3734436",
+                "vt": "num"
+            },
+            {
+                "p": "start_hour",
+                "v": "yyyy-mm-ddThh:mm",
+                "vt": "str"
+            },
+            {
+                "p": "end_hour",
+                "v": "yyyy-mm-ddThh:mm",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "1e9d0a8463614d56"
+            ]
+        ]
+    },
+    {
+        "id": "9175a3d689ada576",
+        "type": "debug",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "6128fc586a197c5c",
+        "type": "json",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "9175a3d689ada576",
+                "bf11331d7d5460ed"
+            ]
+        ]
+    },
+    {
+        "id": "bf11331d7d5460ed",
+        "type": "file",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "EjercicioConsultaTemperatura",
+        "filename": "datosTiempo",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 750,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cc1eb68046bd26a",
+        "type": "inject",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 340,
+        "wires": [
+            [
+                "a17240edb2c49dc2"
+            ]
+        ]
+    },
+    {
+        "id": "a17240edb2c49dc2",
+        "type": "file in",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "",
+        "filename": "datosTiempo",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 350,
+        "y": 340,
+        "wires": [
+            [
+                "1c485041c9accefe"
+            ]
+        ]
+    },
+    {
+        "id": "1c485041c9accefe",
+        "type": "json",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 340,
+        "wires": [
+            [
+                "880b8744efdbb87f"
+            ]
+        ]
+    },
+    {
+        "id": "880b8744efdbb87f",
+        "type": "debug",
+        "z": "f2d3ab3a5a8d0e62",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 340,
+        "wires": []
+    }
+]

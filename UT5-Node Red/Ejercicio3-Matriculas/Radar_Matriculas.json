@@ -1,0 +1,297 @@
+[
+    {
+        "id": "67f251b3d0f2d94e",
+        "type": "tab",
+        "label": "PrimerRadar",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5520797af6fe2091",
+        "type": "data-generator",
+        "z": "67f251b3d0f2d94e",
+        "name": "car_id",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \"car_id\":\"{{int 0 9}}{{int 0 9}}{{int 0 9}}{{int 0 9}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}\"\n}\n\n",
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "d3f25a04d161ef1f"
+            ]
+        ]
+    },
+    {
+        "id": "528a60b0f0fd2d11",
+        "type": "inject",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "5520797af6fe2091"
+            ]
+        ]
+    },
+    {
+        "id": "0efa120cf5c82d39",
+        "type": "debug",
+        "z": "67f251b3d0f2d94e",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "d3f25a04d161ef1f",
+        "type": "function",
+        "z": "67f251b3d0f2d94e",
+        "name": "function 6",
+        "func": "msg.payload.moment = Date.now()\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "0efa120cf5c82d39",
+                "f65fbaac2b13c36f"
+            ]
+        ]
+    },
+    {
+        "id": "bba18ba017fb5bc4",
+        "type": "websocket in",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "server": "",
+        "client": "4a1f6cac2eeec11b",
+        "x": 250,
+        "y": 340,
+        "wires": [
+            [
+                "fbfd9c483fac9ec3",
+                "19779f4a143c5e49"
+            ]
+        ]
+    },
+    {
+        "id": "8223f06d3ed48f0d",
+        "type": "debug",
+        "z": "67f251b3d0f2d94e",
+        "name": "debug 21",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "f65fbaac2b13c36f",
+        "type": "websocket out",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "server": "2938d4495fb36e0f",
+        "client": "",
+        "x": 660,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "901216464b296da5",
+        "type": "data-generator",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \n    \"car_id\":\"{{payload.car_id}}\n    \"country\": \"{{country}}\",\n    \"address\": \"{{int 1 100}} {{street}}\",\n    \"owner\": \"{{firstName}}{{lastName}}\",\n    \"year_f\": \"{{date '1900' '2000' 'YYYY'}}\"\n}",
+        "x": 660,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fbfd9c483fac9ec3",
+        "type": "debug",
+        "z": "67f251b3d0f2d94e",
+        "name": "debug 22",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "19779f4a143c5e49",
+        "type": "json",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 470,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6c762fa4724352ad",
+        "type": "http in",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "url": "http://localhost:1880/context/car",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 540,
+        "wires": [
+            [
+                "4a1875fa83362456",
+                "6ec230f5de2a181a"
+            ]
+        ]
+    },
+    {
+        "id": "cd3536548b187003",
+        "type": "http request",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 710,
+        "y": 540,
+        "wires": [
+            [
+                "21907618b09c421f"
+            ]
+        ]
+    },
+    {
+        "id": "21907618b09c421f",
+        "type": "debug",
+        "z": "67f251b3d0f2d94e",
+        "name": "debug 23",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "4a1875fa83362456",
+        "type": "debug",
+        "z": "67f251b3d0f2d94e",
+        "name": "debug 24",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "6ec230f5de2a181a",
+        "type": "data-generator",
+        "z": "67f251b3d0f2d94e",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \n    \"car_id\":\"{{payload.car_id}}\n    \"country\": \"{{country}}\",\n    \"address\": \"{{int 1 100}} {{street}}\",\n    \"owner\": \"{{firstName}}{{lastName}}\",\n    \"year_f\": \"{{date '1900' '2000' 'YYYY'}}\"\n}",
+        "x": 520,
+        "y": 520,
+        "wires": [
+            [
+                "cd3536548b187003"
+            ]
+        ]
+    },
+    {
+        "id": "4a1f6cac2eeec11b",
+        "type": "websocket-client",
+        "path": "ws://localhost:1880/ws/radar",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": "",
+        "headers": []
+    },
+    {
+        "id": "2938d4495fb36e0f",
+        "type": "websocket-listener",
+        "path": "/ws/radar",
+        "wholemsg": "false"
+    },
+    {
+        "id": "dbda7d5e1a1d0345",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-data-generator": "1.0.2"
+        }
+    }
+]

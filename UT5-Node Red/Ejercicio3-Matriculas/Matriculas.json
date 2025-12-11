@@ -1,0 +1,221 @@
+[
+    {
+        "id": "d76180959ccf8a7f",
+        "type": "tab",
+        "label": "Matriculas",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fba963a46b1440cb",
+        "type": "data-generator",
+        "z": "d76180959ccf8a7f",
+        "name": "CarId",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \"car_id\":\"{{int 0 9}}{{int 0 9}}{{int 0 9}}{{int 0 9}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}\"\n}",
+        "x": 290,
+        "y": 60,
+        "wires": [
+            [
+                "280ef248abe1f2d3"
+            ]
+        ]
+    },
+    {
+        "id": "0336c2cadcfa4b4a",
+        "type": "inject",
+        "z": "d76180959ccf8a7f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "fba963a46b1440cb"
+            ]
+        ]
+    },
+    {
+        "id": "280ef248abe1f2d3",
+        "type": "function",
+        "z": "d76180959ccf8a7f",
+        "name": "Epoch",
+        "func": "msg.payload.moment = Date.now()\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 60,
+        "wires": [
+            [
+                "26815cea45c56084"
+            ]
+        ]
+    },
+    {
+        "id": "26815cea45c56084",
+        "type": "websocket out",
+        "z": "d76180959ccf8a7f",
+        "name": "",
+        "server": "",
+        "client": "f631b764c1930748",
+        "x": 800,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "af022fcafbbd9f03",
+        "type": "websocket in",
+        "z": "d76180959ccf8a7f",
+        "name": "",
+        "server": "d0a6e1b771ed4767",
+        "client": "",
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "453b01ea76d3752b"
+            ]
+        ]
+    },
+    {
+        "id": "fec1f9f8bd49c301",
+        "type": "data-generator",
+        "z": "d76180959ccf8a7f",
+        "name": "MocApi",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \"car\":\"{{payload.car_id}}\",\n    \"pais\": \"{{company}}\",\n    \"direccion\": \"{{street}}\",\n    \"año_fabrica\": \"{{date '2010' '2015' 'YYYY'}}\",\n    \"propietario\": \"{{firstName}}\"\n}",
+        "x": 520,
+        "y": 140,
+        "wires": [
+            [
+                "9bb8ee4b07dd04ed"
+            ]
+        ]
+    },
+    {
+        "id": "453b01ea76d3752b",
+        "type": "json",
+        "z": "d76180959ccf8a7f",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 310,
+        "y": 140,
+        "wires": [
+            [
+                "fec1f9f8bd49c301"
+            ]
+        ]
+    },
+    {
+        "id": "9bb8ee4b07dd04ed",
+        "type": "mongodb4",
+        "z": "d76180959ccf8a7f",
+        "clientNode": "2d1a8a37f485fca8",
+        "mode": "collection",
+        "collection": "DatosCoches",
+        "operation": "insertOne",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "Insert en mongo",
+        "x": 740,
+        "y": 140,
+        "wires": [
+            [
+                "d323bc803461e5a7"
+            ]
+        ]
+    },
+    {
+        "id": "d323bc803461e5a7",
+        "type": "debug",
+        "z": "d76180959ccf8a7f",
+        "name": "Resultado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f631b764c1930748",
+        "type": "websocket-client",
+        "path": "ws://localhost:1880/ws/radar",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": "",
+        "headers": []
+    },
+    {
+        "id": "d0a6e1b771ed4767",
+        "type": "websocket-listener",
+        "path": "/ws/radar",
+        "wholemsg": "false"
+    },
+    {
+        "id": "2d1a8a37f485fca8",
+        "type": "mongodb4-client",
+        "name": "",
+        "protocol": "mongodb",
+        "hostname": "mongodb",
+        "port": "",
+        "dbName": "abastos",
+        "appName": "",
+        "authSource": "",
+        "authMechanism": "DEFAULT",
+        "tls": false,
+        "tlsCAFile": "",
+        "tlsCertificateKeyFile": "",
+        "tlsInsecure": false,
+        "connectTimeoutMS": "30000",
+        "socketTimeoutMS": "0",
+        "minPoolSize": "0",
+        "maxPoolSize": "100",
+        "maxIdleTimeMS": "0",
+        "uri": "",
+        "advanced": "{}",
+        "uriTabActive": "tab-uri-simple"
+    },
+    {
+        "id": "829dbc7d26af1ca0",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-data-generator": "1.0.2",
+            "node-red-contrib-mongodb4": "3.1.1"
+        }
+    }
+]

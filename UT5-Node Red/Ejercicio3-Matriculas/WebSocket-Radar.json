@@ -1,0 +1,348 @@
+[
+    {
+        "id": "43cc417743598dd2",
+        "type": "tab",
+        "label": "WebSocket-Radar",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c3790ca34ee79b35",
+        "type": "group",
+        "z": "43cc417743598dd2",
+        "name": "Cliente",
+        "style": {
+            "stroke": "#92d04f",
+            "fill": "#e3f3d3",
+            "fill-opacity": "0.87",
+            "label": true
+        },
+        "nodes": [
+            "134f9301d9fde44f",
+            "e3b64ae80aa046f5",
+            "fcc2a2b955f8f7c4",
+            "6043279f3041541b",
+            "e13a63ff33ae941f",
+            "c6fc51f7e811b177",
+            "2ab68573645133f6"
+        ],
+        "x": 54,
+        "y": 239,
+        "w": 912,
+        "h": 202
+    },
+    {
+        "id": "31c2036ef57c19fb",
+        "type": "group",
+        "z": "43cc417743598dd2",
+        "name": "Servidor",
+        "style": {
+            "stroke": "#6f2fa0",
+            "fill": "#dbcbe7",
+            "fill-opacity": "0.9",
+            "label": true
+        },
+        "nodes": [
+            "86dc1fc880be0c51",
+            "40b7337b69025763",
+            "c2e20d5377a0bd0a",
+            "007eb5167ff38519",
+            "57ab6accd434e0b6",
+            "ac9b590eac0899ed",
+            "ee876a7124739c39",
+            "e20a5c091d3cfb47",
+            "86925daf03233622"
+        ],
+        "x": 54,
+        "y": 39,
+        "w": 882,
+        "h": 122
+    },
+    {
+        "id": "86dc1fc880be0c51",
+        "type": "websocket in",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "Radar - WS IN",
+        "server": "2938d4495fb36e0f",
+        "client": "",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "c2e20d5377a0bd0a"
+            ]
+        ]
+    },
+    {
+        "id": "40b7337b69025763",
+        "type": "comment",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "",
+        "info": "Este nodo recibe el JSON del cliente como string",
+        "x": 140,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c2e20d5377a0bd0a",
+        "type": "json",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 330,
+        "y": 120,
+        "wires": [
+            [
+                "57ab6accd434e0b6"
+            ]
+        ]
+    },
+    {
+        "id": "007eb5167ff38519",
+        "type": "comment",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "",
+        "info": "Ahora el car_id es un object",
+        "x": 340,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "57ab6accd434e0b6",
+        "type": "data-generator",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "mock api",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \"car_id\":\"{{payload.car_id}}\",\n    \"country\": \"{{country}}\",\n    \"address\": \"{{int 1 100}} {{street}}\",\n    \"owner\": \"{{firstName}} {{lastName}}\",\n    \"year_f\": \"{{date '1900' '2000' 'YYYY'}}\"\n}\n",
+        "x": 520,
+        "y": 120,
+        "wires": [
+            [
+                "ee876a7124739c39",
+                "e20a5c091d3cfb47"
+            ]
+        ]
+    },
+    {
+        "id": "ac9b590eac0899ed",
+        "type": "comment",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "",
+        "info": "Simula una API\n para poder realizar pruebas de manera aislada",
+        "x": 520,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "ee876a7124739c39",
+        "type": "debug",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "134f9301d9fde44f",
+        "type": "websocket out",
+        "z": "43cc417743598dd2",
+        "g": "c3790ca34ee79b35",
+        "name": "",
+        "server": "",
+        "client": "4a1f6cac2eeec11b",
+        "x": 800,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e3b64ae80aa046f5",
+        "type": "inject",
+        "z": "43cc417743598dd2",
+        "g": "c3790ca34ee79b35",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "e13a63ff33ae941f"
+            ]
+        ]
+    },
+    {
+        "id": "fcc2a2b955f8f7c4",
+        "type": "debug",
+        "z": "43cc417743598dd2",
+        "g": "c3790ca34ee79b35",
+        "name": "debug 26",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6043279f3041541b",
+        "type": "function",
+        "z": "43cc417743598dd2",
+        "g": "c3790ca34ee79b35",
+        "name": "epoch",
+        "func": "msg.payload.moment = Date.now()\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 280,
+        "wires": [
+            [
+                "fcc2a2b955f8f7c4",
+                "134f9301d9fde44f"
+            ]
+        ]
+    },
+    {
+        "id": "e13a63ff33ae941f",
+        "type": "data-generator",
+        "z": "43cc417743598dd2",
+        "g": "c3790ca34ee79b35",
+        "name": "car_id",
+        "field": "payload",
+        "fieldType": "msg",
+        "syntax": "json",
+        "template": "{\n    \"car_id\":\"{{int 0 9}}{{int 0 9}}{{int 0 9}}{{int 0 9}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}{{char \"ABCDEF\"}}\"\n}\n\n",
+        "x": 350,
+        "y": 280,
+        "wires": [
+            [
+                "6043279f3041541b"
+            ]
+        ]
+    },
+    {
+        "id": "c6fc51f7e811b177",
+        "type": "comment",
+        "z": "43cc417743598dd2",
+        "g": "c3790ca34ee79b35",
+        "name": "car_id",
+        "info": "Genera la matrícula",
+        "x": 350,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "2ab68573645133f6",
+        "type": "comment",
+        "z": "43cc417743598dd2",
+        "g": "c3790ca34ee79b35",
+        "name": "ws out ",
+        "info": "envia el json a ws://localhost:1880/ws/radar",
+        "x": 710,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "86925daf03233622",
+        "type": "debug",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "name": "debug 27",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "e20a5c091d3cfb47",
+        "type": "mongodb4",
+        "z": "43cc417743598dd2",
+        "g": "31c2036ef57c19fb",
+        "clientNode": "01db0c6099fc25a3",
+        "mode": "collection",
+        "collection": "matriculas",
+        "operation": "insertOne",
+        "output": "toArray",
+        "maxTimeMS": "0",
+        "handleDocId": false,
+        "name": "",
+        "x": 680,
+        "y": 80,
+        "wires": [
+            [
+                "86925daf03233622"
+            ]
+        ]
+    },
+    {
+        "id": "2938d4495fb36e0f",
+        "type": "websocket-listener",
+        "path": "/ws/radar",
+        "wholemsg": "false"
+    },
+    {
+        "id": "4a1f6cac2eeec11b",
+        "type": "websocket-client",
+        "path": "ws://localhost:1880/ws/radar",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": "",
+        "headers": []
+    },
+    {
+        "id": "3e7ed8180a48e4df",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-data-generator": "1.0.2",
+            "node-red-contrib-mongodb4": "3.3.0"
+        }
+    }
+]

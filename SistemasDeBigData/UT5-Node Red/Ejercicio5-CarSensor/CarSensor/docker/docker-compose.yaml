@@ -1,0 +1,60 @@
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: car_sensor_postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql
+      # - ./postgres_init:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_PASSWORD=abastos
+    networks:
+      - node-red
+
+  mongodb:
+    image: mongo:latest
+    container_name: car_sensor_mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - node-red
+
+  node-red:
+    image: nodered/node-red:latest
+    container_name: car_sensor_node-red
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "1880:1880"
+    networks:
+      - node-red
+    volumes:
+      - node-red-data:/data
+
+  redis-stack:
+    image: redis/redis-stack:latest
+    container_name: car_sensor_redis
+    ports:
+      - "6379:6379"        # Puerto de Redis
+      - "8001:8001"        # Puerto para la interfaz web de Redis Stack
+    volumes:
+      - redis-data:/data   # Volumen para persistencia de datos
+    networks:
+      - node-red
+  
+
+networks:
+  node-red:
+
+volumes:
+  mongodb-data:
+  node-red-data:
+  postgres-data:
+  redis-data:

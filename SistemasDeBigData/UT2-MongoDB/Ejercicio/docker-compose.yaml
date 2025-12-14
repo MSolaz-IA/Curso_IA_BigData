@@ -1,0 +1,19 @@
+
+# listado de contenedores que se van a levantar
+services:
+  mongodb:
+    # imágen que se va a utilizar para crear el contenedor
+    image: mongo:latest
+    container_name: mongodb
+    # listado de puertos que se van a mapear
+    ports:
+      - "27017:27017"
+    # variables de entorno que se crearán dentro del contenedor
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

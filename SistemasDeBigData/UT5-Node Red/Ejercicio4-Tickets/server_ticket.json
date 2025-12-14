@@ -1,0 +1,538 @@
+[
+    {
+        "id": "1c4271804d9e80f8",
+        "type": "tab",
+        "label": "Server",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "328cd6142c5132c5",
+        "type": "group",
+        "z": "1c4271804d9e80f8",
+        "name": "Logout",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "eae1ed39350b141f",
+            "d1a43df11ce8c961",
+            "edb6afaa3b255e3b",
+            "f7e829706c7bda2b"
+        ],
+        "x": 54,
+        "y": 259,
+        "w": 812,
+        "h": 82
+    },
+    {
+        "id": "bf5f2ae4800bfec1",
+        "type": "group",
+        "z": "1c4271804d9e80f8",
+        "name": "Create Index",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "60ce99e4ec2aeb70",
+            "bda19c7f555e8318"
+        ],
+        "x": 54,
+        "y": 399,
+        "w": 822,
+        "h": 82
+    },
+    {
+        "id": "f0503eb76e871263",
+        "type": "group",
+        "z": "1c4271804d9e80f8",
+        "name": "Buy Ticket",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "d30c683bd40beddf",
+            "adf9b53230ea92a1",
+            "0e7fb263509a6bd8",
+            "7648f932e851b5f0"
+        ],
+        "x": 54,
+        "y": 519,
+        "w": 1152,
+        "h": 82
+    },
+    {
+        "id": "b08613be984ec2cc",
+        "type": "group",
+        "z": "1c4271804d9e80f8",
+        "name": "Search",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "074b862fed44c130",
+            "1524b10194be2317",
+            "c1b7e529917b6440",
+            "73d833645dc8e9b9"
+        ],
+        "x": 54,
+        "y": 639,
+        "w": 1092,
+        "h": 82
+    },
+    {
+        "id": "9bbd4d2a026c0eb6",
+        "type": "group",
+        "z": "1c4271804d9e80f8",
+        "name": "Login",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "cc5491dcc5f97597",
+            "04a05d9c1c5b91df",
+            "e5b0faec80c0ecf0",
+            "96ba9839d4484298",
+            "fb81da3df2be1ac0",
+            "71fe39a9c98d3d38",
+            "6a2cc7425b33eb92",
+            "88c02e6570e8efc2"
+        ],
+        "x": 54,
+        "y": 39,
+        "w": 1292,
+        "h": 182
+    },
+    {
+        "id": "eae1ed39350b141f",
+        "type": "http in",
+        "z": "1c4271804d9e80f8",
+        "g": "328cd6142c5132c5",
+        "name": "",
+        "url": "/user/logout",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 300,
+        "wires": [
+            [
+                "edb6afaa3b255e3b"
+            ]
+        ]
+    },
+    {
+        "id": "d1a43df11ce8c961",
+        "type": "http response",
+        "z": "1c4271804d9e80f8",
+        "g": "328cd6142c5132c5",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 780,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "60ce99e4ec2aeb70",
+        "type": "inject",
+        "z": "1c4271804d9e80f8",
+        "g": "bf5f2ae4800bfec1",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bda19c7f555e8318",
+        "type": "debug",
+        "z": "1c4271804d9e80f8",
+        "g": "bf5f2ae4800bfec1",
+        "name": "debug 46",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d30c683bd40beddf",
+        "type": "http response",
+        "z": "1c4271804d9e80f8",
+        "g": "f0503eb76e871263",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1120,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "074b862fed44c130",
+        "type": "http response",
+        "z": "1c4271804d9e80f8",
+        "g": "b08613be984ec2cc",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1060,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "1524b10194be2317",
+        "type": "http in",
+        "z": "1c4271804d9e80f8",
+        "g": "b08613be984ec2cc",
+        "name": "",
+        "url": "/ticket/search",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [
+                "c1b7e529917b6440"
+            ]
+        ]
+    },
+    {
+        "id": "adf9b53230ea92a1",
+        "type": "http in",
+        "z": "1c4271804d9e80f8",
+        "g": "f0503eb76e871263",
+        "name": "",
+        "url": "/ticket/buy",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 560,
+        "wires": [
+            [
+                "0e7fb263509a6bd8"
+            ]
+        ]
+    },
+    {
+        "id": "cc5491dcc5f97597",
+        "type": "http in",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "name": "",
+        "url": "/user/login",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "96ba9839d4484298"
+            ]
+        ]
+    },
+    {
+        "id": "04a05d9c1c5b91df",
+        "type": "http response",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "name": "",
+        "statusCode": "500",
+        "headers": {},
+        "x": 880,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e5b0faec80c0ecf0",
+        "type": "http response",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1260,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "96ba9839d4484298",
+        "type": "function",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "name": "function 1",
+        "func": "msg.request = msg.payload;\nmsg.payload = [\"activeUsers\",msg.payload.user];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [
+                "fb81da3df2be1ac0"
+            ]
+        ]
+    },
+    {
+        "id": "71fe39a9c98d3d38",
+        "type": "switch",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 690,
+        "y": 120,
+        "wires": [
+            [
+                "6a2cc7425b33eb92"
+            ],
+            [
+                "04a05d9c1c5b91df"
+            ]
+        ]
+    },
+    {
+        "id": "6a2cc7425b33eb92",
+        "type": "function",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "name": "function 2",
+        "func": "// `users:${Math.random()}`\nnode.warn(new Date().getMilliseconds());\nmsg.payload = [`user:${new Date().getMilliseconds() }`, \"user\", msg.request.user];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 80,
+        "wires": [
+            [
+                "88c02e6570e8efc2"
+            ]
+        ]
+    },
+    {
+        "id": "edb6afaa3b255e3b",
+        "type": "function",
+        "z": "1c4271804d9e80f8",
+        "g": "328cd6142c5132c5",
+        "name": "function 3",
+        "func": "msg.request = msg.payload;\nmsg.payload = [\"activeUsers\",msg.payload.user];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 300,
+        "wires": [
+            [
+                "f7e829706c7bda2b"
+            ]
+        ]
+    },
+    {
+        "id": "fb81da3df2be1ac0",
+        "type": "redis-command",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "server": "3c928b588f3456d3",
+        "command": "SADD",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 510,
+        "y": 120,
+        "wires": [
+            [
+                "71fe39a9c98d3d38"
+            ]
+        ]
+    },
+    {
+        "id": "88c02e6570e8efc2",
+        "type": "redis-command",
+        "z": "1c4271804d9e80f8",
+        "g": "9bbd4d2a026c0eb6",
+        "server": "3c928b588f3456d3",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 1070,
+        "y": 80,
+        "wires": [
+            [
+                "e5b0faec80c0ecf0"
+            ]
+        ]
+    },
+    {
+        "id": "f7e829706c7bda2b",
+        "type": "redis-command",
+        "z": "1c4271804d9e80f8",
+        "g": "328cd6142c5132c5",
+        "server": "3c928b588f3456d3",
+        "command": "SREM",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 570,
+        "y": 300,
+        "wires": [
+            [
+                "d1a43df11ce8c961"
+            ]
+        ]
+    },
+    {
+        "id": "0e7fb263509a6bd8",
+        "type": "function",
+        "z": "1c4271804d9e80f8",
+        "g": "f0503eb76e871263",
+        "name": "function 4",
+        "func": "msg.request = msg.payload;\nmsg.payload = [`user:${msg.payload.user}`, \"ticket\", msg.request.id];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 560,
+        "wires": [
+            [
+                "7648f932e851b5f0"
+            ]
+        ]
+    },
+    {
+        "id": "7648f932e851b5f0",
+        "type": "redis-command",
+        "z": "1c4271804d9e80f8",
+        "g": "f0503eb76e871263",
+        "server": "3c928b588f3456d3",
+        "command": "HSET",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 590,
+        "y": 560,
+        "wires": [
+            [
+                "d30c683bd40beddf"
+            ]
+        ]
+    },
+    {
+        "id": "c1b7e529917b6440",
+        "type": "function",
+        "z": "1c4271804d9e80f8",
+        "g": "b08613be984ec2cc",
+        "name": "function 5",
+        "func": "msg.request = msg.payload;\nmsg.payload = [`user:${msg.request.user}`];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 680,
+        "wires": [
+            [
+                "73d833645dc8e9b9"
+            ]
+        ]
+    },
+    {
+        "id": "73d833645dc8e9b9",
+        "type": "redis-command",
+        "z": "1c4271804d9e80f8",
+        "g": "b08613be984ec2cc",
+        "server": "3c928b588f3456d3",
+        "command": "HGETALL",
+        "name": "",
+        "topic": "",
+        "params": "[]",
+        "paramsType": "json",
+        "payloadType": "json",
+        "block": false,
+        "x": 660,
+        "y": 680,
+        "wires": [
+            [
+                "074b862fed44c130"
+            ]
+        ]
+    },
+    {
+        "id": "3c928b588f3456d3",
+        "type": "redis-config",
+        "name": "Local",
+        "options": "{\"host\":\"redis-stack\",\"port\":\"6379\",\"db\":0}",
+        "cluster": false,
+        "optionsType": "json"
+    },
+    {
+        "id": "aadc397fbccc9da2",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-redis": "1.4.0"
+        }
+    }
+]

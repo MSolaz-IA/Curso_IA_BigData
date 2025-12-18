@@ -1,5 +1,0 @@
-redis
-python-dotenv
-pymongo[srv]
-psycopg2-binary
-websockets

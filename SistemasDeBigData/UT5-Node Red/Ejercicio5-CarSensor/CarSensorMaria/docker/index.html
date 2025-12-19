@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vehicle Simulation with Sensors</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #e9e9e9;
+        margin: 0;
+        padding: 20px;
+    }
+
+    #road-container {
+        width: 100%;
+        overflow-x: scroll;
+        border: 3px solid #222;
+        border-radius: 10px;
+    }
+
+    #road {
+        width: 3000px;
+        height: 250px;
+        background: #444;
+        position: relative;
+        border-radius: 10px;
+    }
+
+    .vehicle {
+        width: 60px;
+        height: 35px;
+        position: absolute;
+        left: 20px;
+        border-radius: 5px;
+        color: white;
+        text-align: center;
+        line-height: 35px;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    .sensor {
+        width: 10px;
+        height: 250px;
+        background: yellow;
+        position: absolute;
+        opacity: 0.6;
+        top: 0;
+    }
+
+    #controls {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .panel {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        width: 260px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    button {
+        padding: 8px 12px;
+        cursor: pointer;
+        margin: 5px 0;
+    }
+</style>
+</head>
+<body>
+
+<h2>Advanced Simulation — 10 Fixed Vehicles + Sensors</h2>
+
+<div id="road-container">
+    <div id="road"></div>
+</div>
+
+<h3>Vehicle Controls</h3>
+<div id="controls"></div>
+
+<script>
+
+// ======================================================
+//  SENSOR CONFIGURATION
+// ======================================================
+
+const sensorPositions = [100, 300, 600, 900, 1200, 1600, 2000, 2400, 2800];
+const road = document.getElementById("road");
+
+sensorPositions.forEach((x, i) => {
+    const s = document.createElement("div");
+    s.className = "sensor";
+    s.style.left = x + "px";
+    s.id = "sensor" + (i+1);
+    road.appendChild(s);
+});
+
+const sensors = sensorPositions.map((x, index) => ({
+    id: "sensor" + (index + 1),
+    x: x,
+    triggered: {}
+}));
+
+// ======================================================
+//  FIXED VEHICLES WITH BRAND, MODEL, PLATE
+// ======================================================
+
+const fixedVehicles = [
+    { id: "CAR01", brand: "Toyota", model: "Corolla", licensePlate: "ABC-1234", speed: 3 },
+    { id: "CAR02", brand: "Ford", model: "Explorer", licensePlate: "FGH-5621", speed: 2 },
+    { id: "CAR03", brand: "Mercedes", model: "Sprinter", licensePlate: "JKL-8712", speed: 4 },
+    { id: "CAR04", brand: "Volvo", model: "FH16", licensePlate: "TRK-9910", speed: 2 },
+    { id: "CAR05", brand: "Honda", model: "CB500", licensePlate: "MOT-2244", speed: 5 },
+    { id: "CAR06", brand: "Renault", model: "Kangoo", licensePlate: "VAN-1312", speed: 3 },
+    { id: "CAR07", brand: "BMW", model: "320i", licensePlate: "BMW-4451", speed: 3 },
+    { id: "CAR08", brand: "Jeep", model: "Cherokee", licensePlate: "SUV-7841", speed: 2 },
+    { id: "CAR09", brand: "Nissan", model: "Navara", licensePlate: "PCK-5523", speed: 4 },
+    { id: "CAR10", brand: "MAN", model: "City Bus", licensePlate: "BUS-9090", speed: 2 }
+];
+
+let vehicles = {}; // state of each vehicle
+
+// ======================================================
+//  CREATE VEHICLES AUTOMATICALLY
+// ======================================================
+
+window.onload = () => {
+    fixedVehicles.forEach((veh, index) => {
+        createFixedVehicle(veh, index);
+    });
+};
+
+function createFixedVehicle(data, index) {
+
+    const color = getRandomColor();
+
+    // Visual vehicle (ID only)
+    const v = document.createElement("div");
+    v.className = "vehicle";
+    v.id = data.id;
+    v.style.background = color;
+    v.style.top = (20 + 22 * index) + "px";
+    v.innerText = data.id;
+    road.appendChild(v);
+
+    // Internal state
+    vehicles[data.id] = {
+        interval: null,
+        speed: data.speed,
+        brand: data.brand,
+        model: data.model,
+        plate: data.licensePlate
+    };
+
+    // Control panel
+    const panel = document.createElement("div");
+    panel.className = "panel";
+    panel.id = "panel-" + data.id;
+    panel.innerHTML = `
+        <h3>${data.id}</h3>
+        <p><b>Brand:</b> ${data.brand}</p>
+        <p><b>Model:</b> ${data.model}</p>
+        <p><b>License Plate:</b> ${data.licensePlate}</p>
+        <p><b>Speed:</b> ${data.speed}</p>
+        <button onclick="start('${data.id}')">▶ Start</button>
+        <button onclick="pause('${data.id}')">⏸ Pause</button>
+        <button onclick="resetCar('${data.id}')">🔄 Reset</button>
+    `;
+    controls.appendChild(panel);
+}
+
+// ======================================================
+// MOVEMENT + SENSOR DETECTION
+// ======================================================
+
+function start(vehicleId) {
+    if (!vehicles[vehicleId].interval) {
+        vehicles[vehicleId].interval = setInterval(() => moveVehicle(vehicleId), 30);
+    }
+}
+
+function pause(vehicleId) {
+    clearInterval(vehicles[vehicleId].interval);
+    vehicles[vehicleId].interval = null;
+}
+
+function resetCar(vehicleId) {
+    pause(vehicleId);
+    document.getElementById(vehicleId).style.left = "20px";
+    sensors.forEach(s => s.triggered[vehicleId] = false);
+}
+
+function moveVehicle(vehicleId) {
+    const vehicle = document.getElementById(vehicleId);
+    let x = parseInt(vehicle.style.left);
+    if (isNaN(x)) x = 20;
+
+    x += vehicles[vehicleId].speed;
+    vehicle.style.left = x + "px";
+
+    detectSensors(vehicleId, x);
+}
+
+function detectSensors(vehicleId, x) {
+    sensors.forEach(sensor => {
+
+        if (x >= sensor.x - 5 && x <= sensor.x + 5) {
+            if (!sensor.triggered[vehicleId]) {
+                sensor.triggered[vehicleId] = true;
+                onSensorTrigger(vehicleId, sensor.id);
+            }
+        }
+
+        if (x > sensor.x + 20 || x < sensor.x - 20) {
+            sensor.triggered[vehicleId] = false;
+        }
+
+    });
+}
+
+function onSensorTrigger(vehicleId, sensorId) {
+    console.log(`Vehicle ${vehicleId} crossed ${sensorId}`);
+    fetch("http://localhost:1880/event", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            vehicle: fixedVehicles.filter(v => v.id == vehicleId)[0],
+            sensor: sensorId,
+            timestamp: Date.now()
+        })
+    });
+}
+
+// ======================================================
+// UTILITIES
+// ======================================================
+
+function getRandomColor() {
+    return `hsl(${Math.random()*360}, 70%, 50%)`;
+}
+
+</script>
+</body>
+</html>

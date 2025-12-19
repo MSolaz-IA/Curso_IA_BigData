@@ -1,4 +1,4 @@
-
+import json
 import os
 import sys
 from dotenv import load_dotenv
@@ -13,14 +13,14 @@ from processors.sensor_event_processor import SensorEventProcessor
 def test():
     """ prueba de las conexiones disponibles """
 
-    settings.redis_dao.set('name','mario')
+    settings.redis_dao.set('name','maria')
     print(settings.redis_dao.get('name'))
    
-    record = {'name':'mario'}
+    record = {'name':'maria'}
     settings.mongo_dao.inser_one('users',record)
     print(settings.mongo_dao.find_one('users'))
 
-    settings.postgres_dao.insert(sql='insert into users_example(name) values (%s)',values=("mario",)) # type: ignore
+    settings.postgres_dao.insert(sql='insert into users_example(name) values (%s)',values=("maria",))
     print(settings.postgres_dao.find_all(table='users_example'))
 
 def process():
@@ -34,20 +34,26 @@ def process():
 
 def summary():
     data = {}
-    """ TODO: preparar las queries necesarias para rellenar el diccionario data con la información """
-    mongo_logs_data = settings.mongo_dao.find('events')
-    data['historic'] = mongo_logs_data
-    
-    for i in range(1,9):
-        data['count_sensor'+str(i)] = settings.redis_dao.get("count:sensor"+str(i))
+    contador_sensores = {}
+    last_car_sensored = {}
 
-    for i in range(1,11):
-        if i < 10:
-            data['last_sensor_CAR0'+str(i)] = settings.redis_dao.get("v:CAR0"+str(i)+"_sensor")
-        else:
-            data['last_sensor_CAR'+str(i)] = settings.redis_dao.get("v:CAR"+str(i)+"_sensor")
+    data['matriculas'] = settings.mongo_dao.find('matriculas')
+
+    sensor = [i for i in range(1,10)]   
+    coches = [f'CAR{i:02}' for i in range(1, 11)]
+
+    for s in sensor:
+        contador_sensores[f'sensor{s}'] = (settings.redis_dao.get(f'sensor{s}'))
+  
+    for s in coches:        
+        last_car_sensored[f'{s}'] = (settings.redis_dao.get(f"last_sensor_info_{s}"))
     
-    print(data)
+    data['contador_sensores'] = contador_sensores
+    data['last_car_sensored'] = last_car_sensored
+
+    print(json.dumps(data, indent=4, ensure_ascii=False))
+
+
 
 if __name__ == "__main__":
     load_dotenv()
